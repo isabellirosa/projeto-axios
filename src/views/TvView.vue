@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import TvCard from "@/components/TvCard.vue";
 import api from '@/plugins/axios';
 import { useGenreStore } from '@/stores/genre';
 import { useRouter } from 'vue-router'
@@ -84,20 +85,8 @@ onMounted(async () => {
         </li>
     </ul>
     <div class="tv-list">
-        <div v-for="item in tv" :key="item.id" class="tv-card">
-            <img :src="`https://image.tmdb.org/t/p/w500${item.poster_path}`" :alt="item.original_name"
-                @click="openTv(item.id)" />
-            <div class="tv-details">
-                <p class="tv-title">{{ item.original_name }}</p>
-                <p class="movie-release-date">{{ formatDate(item.first_air_date) }}</p>
-                <p class="movie-genres">
-                    <span v-for="genre_id in item.genre_ids" :key="genre_id" @click="listTV(genre_id)"
-                        :class="{ active: genre_id === genreStore.currentGenreId }">
-                        {{ getGenreName(genre_id) }}
-                    </span>
-                </p>
-            </div>
-        </div>
+        <TvCard v-for="item in tv" :key="item.id" :tv-item="item" :current-genre-id="currentGenreId" :get-genre-name="getGenreName" :format-date="formatDate" @open-tv="openTv" @list-tv="listTV" 
+      />
     </div>
 </template>
 
