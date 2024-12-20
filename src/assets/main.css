@@ -15,15 +15,20 @@ body {
   font-family: "Poppins", serif;
   font-size: 15px;
   text-rendering: optimizeLegibility;
+  background-color: rgb(23, 26, 22);
+overflow-x: hidden;
 }
-
 .seta-carosel {
   box-sizing: content-box;
-  color: #ffffff !important;
-  border: 1px solid #ffffff !important;
+  color: #691414  !important;
+  border: 1px solid #691414  !important;
   border-radius: 50% !important;
-  background-color: rgba(0, 0, 0, 0.616) !important;
+  background-color: #ffffffb0 !important;
   margin:20px 2vw !important;
   width: 45px !important;
   height: 45px !important;
+}
+.seta-generos{
+  box-sizing: content-box;
+  color: #ffffff  !important;
 }

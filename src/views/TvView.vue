@@ -9,17 +9,12 @@
     <div v-if="isLoading" class="loading">
       <img class="gif-loading" is-full-page src="@/assets/natal.gif" />
     </div>
-    <header>
-      <nav>
-        <MenuGeral />
-      </nav>
-    </header>
     <h1 class="titulo-pagina">Programas de tv Natalinos</h1>
   
     <!-- Lista de gêneros com carousel -->
     <Carousel :itemsToShow="7.8" :transition="500">
       <div class="carousel">
-        <Slide v-for="genre in genres" :key="genre.id" @click="filterByGenre(genre.id)" class="genre-item carousel" :class="{ active: genre.id === filteredGenreId }">
+        <Slide v-for="genre in genres" :key="genre.id" @click="filterByGenre(genre.id)" class="genre-item" :class="{ active: genre.id === filteredGenreId }">
           {{ genreStore.getGenreName(genre.id) }}
         </Slide>
       </div>
@@ -154,55 +149,61 @@
   });
   </script>
   <style scoped>
+  .active {
+    background-color:  #da131341 !important;
+    color:white !important;
+    font-weight: bolder;
+  }
   header {
-      position: fixed; /* Deixa o menu fixo no topo */
-      top: 0;
-      left: 0;
-      width: 100%;
-      height:15vh;
-      color: black;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      justify-content:flex-end;
-      z-index: 10; /* Garante que o menu fique sobre o conteúdo */
-      font-weight: 500;
-      transition: background-color 0.3s ease; /* Transição suave para o fundo */
-    }
+    position: fixed; /* Deixa o menu fixo no topo */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height:15vh;
+    background-color: rgba(23, 26, 22, 0.589);
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    padding-right: 50px;
+    display: flex;
+    align-items: center;
+    justify-content:flex-end;
+    z-index: 10; /* Garante que o menu fique sobre o conteúdo */
+   font-weight: 500;
+   
+    transition: background-color 0.3s ease; /* Transição suave para o fundo */
+  }
   
+  /* Navegação dentro do menu */
   nav {
-      display: flex;
-      column-gap:60px;
-    }
+    display: flex;
+    column-gap:60px;
+  }
   
   nav a {
-      text-decoration: none;
-      color: black;
-      transition: color 0.3s;
-    }
+    text-decoration: none;
+    color: #ffffff;
+    transition: color 0.3s;
+  }
   
   nav a:hover {
-      font-weight: 600;
-    }
-  
-  .titulo-pagina {
-      margin-top: 17vh;
-      font-family: "Cherry Swash", serif;
-      font-weight: 400;
-      font-style: normal;
-      font-size: 50px;
-      text-align: center;
-      color: #1B4A14;
-    }
-  
+    font-weight: 600;
+  }
+  .titulo-pagina    { margin: 15vh 0vw 50px 0vw ;
+  font-family: "Cherry Swash", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 50px;
+  text-align: center;
+  color: #cf2e2e;
+  }
   .titulo-genero {
     display: block;
     font-weight: 600;
-    color: #B02525;
+    color: #cf2e2e;
     margin: 0px 30px 30px 30px;
-    border-bottom: 1.5px solid #B02525;
+    border-bottom: 1.5px solid #cf2e2e;
     width: 100%;
-    margin: 0px 30px 30px 30px;
+    margin: 0px 30px 30px 70px;
     }
   
   .genre-list {
@@ -216,28 +217,30 @@
     }
   
     .genre-item {
+      min-width: 200px ;
         height: min-content;
-        border:1px solid #387250;
+        border:1px solid #ffffff;
         border-radius: 1rem;
         padding: 0.5rem 1rem;
-        color: #387250;
+        color: #ffffff;
         transition: background-color 0.3s, box-shadow 0.3s;
-        margin: 10px;
-    
+      margin: 0px 10px;
       }
       
   
-  .genre-item:hover {
-      cursor: pointer;
-      background-color: #4e9e5f;
-      box-shadow: 0 0 0.5rem #387250;
-    }
+      .genre-item:hover {
+        cursor: pointer;
+        background-color: #da13139d;
+        box-shadow: 0 0 0.5rem  #da13139d;
+        color:white;
+      }
   
   .tv-list {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
       justify-content: center;
+      margin: 0px 60px;
     }
   
   .genre-section {
@@ -273,6 +276,8 @@
     }
   
   .loading {
+   
+    
       display: flex;
       align-items: center;
       justify-content: center;
@@ -280,7 +285,8 @@
       height: 100vh;
       position: fixed;
       z-index: 999;
-      background-color: #fffffffa;
+      background-color: #fffffffa; 
+      top:0;
     }
   
   .gif-loading {

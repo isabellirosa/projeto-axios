@@ -52,9 +52,11 @@ const emit = defineEmits(["open-tv", "list-tv"]);
 
 <style scoped>
 .data{
-    font-size: 12px;
-    align-self: flex-start;
-  }
+  text-align: left;
+  font-size: 12px;
+  align-self: flex-start;
+  color: white;
+}
 .active {
   background-color: #df1b1b !important;
   font-weight: bolder;
@@ -100,6 +102,7 @@ const emit = defineEmits(["open-tv", "list-tv"]);
   height: 20rem;
   border-radius: 0.5rem;
   box-shadow: 0 0 0.5rem #000;
+  cursor: pointer;
 }
 
 .tv-details {
@@ -107,8 +110,11 @@ const emit = defineEmits(["open-tv", "list-tv"]);
 }
 
 .tv-title {
-  font-size: 1.1rem;
+  text-align: left;
+  align-self: flex-start;
+  font-size: 14px;
   font-weight: bold;
   line-height: 1.3rem;
+  color: white;
 }
 </style>

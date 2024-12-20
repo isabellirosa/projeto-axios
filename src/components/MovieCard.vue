@@ -48,8 +48,10 @@ const emit = defineEmits(["open-movie", "list-movies"]);
   </template>
   <style scoped>
   .data{
+    text-align: left;
     font-size: 12px;
     align-self: flex-start;
+    color: white;
   }
   .active {
     background-color: #df1b1b !important;
@@ -91,6 +93,7 @@ const emit = defineEmits(["open-movie", "list-movies"]);
     width: 100%;
     height: 20rem;
     border-radius: 0.5rem;
+    cursor: pointer;
   }
   
   .movie-details {
@@ -106,6 +109,7 @@ const emit = defineEmits(["open-movie", "list-movies"]);
     font-size: 14px;
     font-weight: bold;
     line-height: 1.3rem;
+    color: white;
   }
   </style>
   

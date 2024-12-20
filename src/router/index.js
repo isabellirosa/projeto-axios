@@ -33,6 +33,10 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+  scrollBehavior(to, from, savedPosition) {
+    // Sempre que navegar para uma nova rota, o scroll será movido para o topo
+    return { top: 0 };
+  },
 });
 
 export default router;

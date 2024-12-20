@@ -137,14 +137,13 @@
   </script>
   
   <style scoped>
-  
 header {
     position: fixed; /* Deixa o menu fixo no topo */
     top: 0;
     left: 0;
     width: 100%;
     height:15vh;
-   
+    background-color: rgba(23, 26, 22, 0.589);
     color: black;
     font-size: 18px;
     padding-right: 50px;
@@ -165,8 +164,9 @@ header {
   
   nav a {
     text-decoration: none;
-    color: #1B4A14;
+    color: #f3f3f3;
     transition: color 0.3s;
+    cursor: pointer;
   }
   
   nav a:hover {
@@ -177,23 +177,23 @@ header {
     margin: 10px 30px;
   }
   .titulo-pagina{
-    margin-top: 17vh;
+    margin: 15vh 0vw 50px 0vw ;
     font-family: "Cherry Swash", serif;
     font-weight: 400;
     font-style: normal;
     font-size: 50px;
     text-align: center;
-    color: #1B4A14;
+    color: #cf2e2e;
   }
   .titulo-genero{
     display: block;
     font-weight: 600;
-    color:#B02525;
-    margin: 0px 30px 30px 30px;
-    border-bottom: 1.5px solid #B02525;;
+    color:#cf2e2e;
+    margin: 0px 30px 30px 70px;
+    border-bottom: 1.5px solid #cf2e2e;;
   }
   .active {
-    background-color: #4e9e5f !important;
+    background-color:  #da131341 !important;
     color:white !important;
     font-weight: bolder;
   }
@@ -206,7 +206,7 @@ header {
   }
   
   .movie-genres span {
-    background-color: #748708;
+    background-color:  #da13139d;
     border-radius: 0.5rem;
     padding: 0.2rem 0.5rem;
     color: #fff;
@@ -222,9 +222,9 @@ header {
   
   .movie-genres span:hover {
     cursor: pointer;
-    background-color: #455a08;
+    background-color:  #da13139d;
     color:white;
-    box-shadow: 0 0 0.5rem #748708;
+    box-shadow: 0 0 0.5rem  #da13139d;
   }
   
   .gif-loading {
@@ -232,13 +232,14 @@ header {
   }
   
   .loading {
+    top:0;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100vw;
     height: 100vh;
     position: fixed;
-    z-index: 999;
+    z-index: 9999;
     background-color: #fffffffa;
   }
   
@@ -254,10 +255,10 @@ header {
   
   .genre-item {
     height: min-content;
-    border:1px solid #387250;
+    border:1px solid #e6e6e6;
     border-radius: 1rem;
     padding: 0.5rem 1rem;
-    color: #387250;
+    color: #e6e6e6;
     transition: background-color 0.3s, box-shadow 0.3s;
     margin: 10px;
 
@@ -265,8 +266,8 @@ header {
   
   .genre-item:hover {
     cursor: pointer;
-    background-color: #4e9e5f;
-    box-shadow: 0 0 0.5rem #387250;
+    background-color: #da13139d;
+    box-shadow: 0 0 0.5rem  #da13139d;
     color:white;
   }
   
@@ -275,6 +276,7 @@ header {
     flex-wrap: wrap;
     gap: 1rem;
     justify-content: center;
+    margin: 0px 60px;
   }
   
   .genre-section {
