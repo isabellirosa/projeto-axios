@@ -1,206 +1,250 @@
-<script setup>
-import { ref, onMounted } from "vue";
-import MovieCard from "@/components/MovieCard.vue";
-import api from "@/plugins/axios";
-import { useGenreStore } from "@/stores/genre";
-import { useRouter } from "vue-router";
-const router = useRouter();
-function openMovie(movieId) {
-  router.push({ name: "MovieDetails", params: { movieId } });
-}
-
-const genreStore = useGenreStore();
-
-const isLoading = ref(false);
-
-const genres = ref([]);
-const movies = ref([]);
-const christmasKeywordId = ref(null); // ID da palavra-chave "Christmas"
-
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-function getGenreName(id) {
-  const genero = genres.value.find((genre) => genre.id === id);
-  return genero.name;
-}
-const formatDate = (date) => new Date(date).toLocaleDateString("pt-BR");
-const listMovies = async (genreId) => {
-  genreStore.setCurrentGenreId(genreId);
-  isLoading.value = true;
-
-  // Inicia a busca dos filmes
-  const start = Date.now();
-  const response = await api.get("discover/movie", {
-    params: {
-      with_genres: genreId,
-      with_keywords: christmasKeywordId.value, // Filtra pela palavra-chave "Christmas"
-      language: "pt-BR",
-    },
-  });
-
-  movies.value = response.data.results;
-
-  // Calcula o tempo restante para completar os 3 segundos
-  const elapsed = Date.now() - start;
-  const remaining = 2000 - elapsed;
-  if (remaining > 0) {
-    await delay(remaining);
-  }
-
-  isLoading.value = false;
-};
-
-// Função para buscar a palavra-chave de Natal (Christmas)
-const fetchChristmasKeyword = async () => {
-  const response = await api.get("search/keyword", {
-    params: {
-      query: "Christmas",
-      language: "pt-BR",
-    },
-  });
-
-  // Se encontrar a palavra-chave "Christmas", armazena o ID
-  if (response.data.results.length > 0) {
-    christmasKeywordId.value = response.data.results[0].id;
-  }
-};
-
-onMounted(async () => {
-  // Busca pelos gêneros de filmes
-  isLoading.value = true;
-  await genreStore.getAllGenres("movie");
-  genres.value = genreStore.genres;
-
-  // Busca o ID da palavra-chave "Christmas"
-  await fetchChristmasKeyword();
-  isLoading.value = false;
-});
-</script>
-
 <template>
-  <div v-if="isLoading" class="loading">
-    <img class="gif-loading" is-full-page src="@/assets/natal.gif" />
-  </div>
-  <h1>Filmes de Natal</h1>
-  <ul class="genre-list">
-    <li
-      v-for="genre in genres"
-      :key="genre.id"
-      @click="listMovies(genre.id)"
-      class="genre-item"
-      :class="{ active: genre.id === genreStore.currentGenreId }"
-    >
-      {{ genreStore.getGenreName(genre.id) }}
-    </li>
-  </ul>
-  <div class="movie-list">
-    <MovieCard v-for="movie in movies" :key="movie.id" :movie="movie" :currentGenreId="currentGenreId" :getGenreName="getGenreName" :formatDate="formatDate" @open-movie="openMovie" @list-movies="listMovies"
-    />
-  </div>
-</template>
-
-<style scoped>
-.active {
-  background-color: #df1b1b !important;
-  font-weight: bolder;
-}
-
-.movie-genres {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.2rem;
-  justify-content: center;
-}
-
-.movie-genres span {
-  background-color: #748708;
-  border-radius: 0.5rem;
-  padding: 0.2rem 0.5rem;
-  color: #fff;
-  font-size: 0.8rem;
-  font-weight: bold;
-  transition: background-color 0.3s, box-shadow 0.3s;
-}
-
-.movie-genres span.active {
-  background-color: #abc322;
-  color: #000;
-}
-
-.movie-genres span:hover {
-  cursor: pointer;
-  background-color: #455a08;
-  box-shadow: 0 0 0.5rem #748708;
-}
-
-.gif-loading {
-  width: 400px;
-}
-
-.loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  background-color: #fffffffa;
-}
-
-.genre-list {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 2rem;
-  list-style: none;
-  margin-bottom: 2rem;
-  padding: 0;
-}
-
-.genre-item {
-  background-color: #387250;
-  border-radius: 1rem;
-  padding: 0.5rem 1rem;
-  color: #fff;
-  transition: background-color 0.3s, box-shadow 0.3s;
-}
-
-.genre-item:hover {
-  cursor: pointer;
-  background-color: #4e9e5f;
-  box-shadow: 0 0 0.5rem #387250;
-}
-
-.movie-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-}
-
-.movie-card {
-  width: 15rem;
-  height: 30rem;
-  border-radius: 0.5rem;
-  overflow: hidden;
-  box-shadow: 0 0 0.5rem #000;
-}
-
-.movie-card img {
-  width: 100%;
-  height: 20rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 0 0.5rem #000;
-}
-
-.movie-details {
-  padding: 0 0.5rem;
-}
-
-.movie-title {
-  font-size: 1.1rem;
-  font-weight: bold;
-  line-height: 1.3rem;
-  height: 3.2rem;
-}
-</style>
+    <div v-if="isLoading" class="loading">
+      <img class="gif-loading" is-full-page src="@/assets/natal.gif" />
+    </div>
+    <h1>Filmes de Natal</h1>
+  
+    <!-- Lista de gêneros -->
+    <ul class="genre-list">
+      <li
+        v-for="genre in genres"
+        :key="genre.id"
+        @click="filterByGenre(genre.id)"
+        class="genre-item"
+        :class="{ active: genre.id === filteredGenreId }"
+      >
+        {{ genreStore.getGenreName(genre.id) }}
+      </li>
+    </ul>
+  
+    <!-- Filmes filtrados ou todos os gêneros -->
+    <div v-if="filteredGenreId" class="movie-list">
+      <h2>{{ getGenreName(filteredGenreId) }}</h2>
+      <MovieCard
+        v-for="movie in movies"
+        :key="movie.id"
+        :movie="movie"
+        :currentGenreId="currentGenreId"
+        :getGenreName="getGenreName"
+        :formatDate="formatDate"
+        @open-movie="openMovie"
+      />
+    </div>
+  
+    <div v-else>
+      <div v-for="genre in genres" :key="genre.id" class="genre-section">
+        <h2>{{ getGenreName(genre.id) }}</h2>
+        <Carousel :itemsToShow="4.8" :transition="500">
+          <Slide v-for="movie in genreMovies[genre.id]" :key="movie.id">
+            <MovieCard
+              :movie="movie"
+              :currentGenreId="genre.id"
+              :getGenreName="getGenreName"
+              :formatDate="formatDate"
+              @open-movie="(movieId) => $router.push({ name: 'MovieDetails', params: { movieId } })"
+            />
+          </Slide>
+          <template #addons>
+            <Navigation class="aa" />
+          </template>
+        </Carousel>
+      </div>
+    </div>
+  </template>
+  
+  <script setup>
+  import { ref, onMounted } from "vue";
+  import MovieCard from "@/components/MovieCard.vue";
+  import api from "@/plugins/axios";
+  import { useGenreStore } from "@/stores/genre";
+  import { Carousel, Slide, Navigation } from "vue3-carousel";
+  import "vue3-carousel/dist/carousel.css";
+  
+  const genreStore = useGenreStore();
+  
+  const isLoading = ref(false);
+  const genres = ref([]);
+  const genreMovies = ref({}); // Estrutura para armazenar os filmes por gênero
+  const filteredGenreId = ref(null); // ID do gênero atualmente filtrado (null = mostrar todos)
+  const christmasKeywordId = ref(null); // ID da palavra-chave "Christmas"
+  const movies = ref([]); // Filmes filtrados para um gênero específico
+  
+  const formatDate = (date) => new Date(date).toLocaleDateString("pt-BR");
+  const getGenreName = (id) => {
+    const genero = genres.value.find((genre) => genre.id === id);
+    return genero ? genero.name : "Desconhecido";
+  };
+  
+  const fetchMoviesByGenre = async (genreId) => {
+    const response = await api.get("discover/movie", {
+      params: {
+        with_genres: genreId,
+        with_keywords: christmasKeywordId.value, // Filtra pela palavra-chave "Christmas"
+        language: "pt-BR",
+      },
+    });
+    return response.data.results;
+  };
+  
+  const fetchChristmasKeyword = async () => {
+    const response = await api.get("search/keyword", {
+      params: {
+        query: "Christmas",
+        language: "pt-BR",
+      },
+    });
+  
+    if (response.data.results.length > 0) {
+      christmasKeywordId.value = response.data.results[0].id;
+    }
+  };
+  
+  // Filtrar por gênero específico
+  const filterByGenre = async (genreId) => {
+    if (filteredGenreId.value === genreId) {
+      // Se o gênero já estiver selecionado, desmarcá-lo para mostrar todos os gêneros
+      filteredGenreId.value = null;
+      movies.value = []; // Limpa a lista de filmes quando o filtro é removido
+    } else {
+      filteredGenreId.value = genreId;
+  
+      // Carregar filmes se ainda não estiverem armazenados
+      if (!genreMovies.value[genreId]) {
+        isLoading.value = true;
+        genreMovies.value[genreId] = await fetchMoviesByGenre(genreId);
+        isLoading.value = false;
+      }
+  
+      // Atribuir os filmes filtrados à variável `movies`
+      movies.value = genreMovies.value[genreId];
+    }
+  };
+  
+  onMounted(async () => {
+    isLoading.value = true;
+  
+    // Busca os gêneros de filmes
+    await genreStore.getAllGenres("movie");
+    genres.value = genreStore.genres;
+  
+    // Busca o ID da palavra-chave "Christmas"
+    await fetchChristmasKeyword();
+  
+    // Carrega filmes para todos os gêneros
+    for (const genre of genres.value) {
+      genreMovies.value[genre.id] = await fetchMoviesByGenre(genre.id);
+    }
+  
+    isLoading.value = false;
+  });
+  </script>
+  
+  <style scoped>
+  /* Estilos existentes */
+  .active {
+    background-color: #df1b1b !important;
+    font-weight: bolder;
+  }
+  
+  .movie-genres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem;
+    justify-content: center;
+  }
+  
+  .movie-genres span {
+    background-color: #748708;
+    border-radius: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: bold;
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .movie-genres span.active {
+    background-color: #abc322;
+    color: #000;
+  }
+  
+  .movie-genres span:hover {
+    cursor: pointer;
+    background-color: #455a08;
+    box-shadow: 0 0 0.5rem #748708;
+  }
+  
+  .gif-loading {
+    width: 400px;
+  }
+  
+  .loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 999;
+    background-color: #fffffffa;
+  }
+  
+  .genre-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    list-style: none;
+    margin-bottom: 2rem;
+    padding: 0;
+  }
+  
+  .genre-item {
+    background-color: #387250;
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .genre-item:hover {
+    cursor: pointer;
+    background-color: #4e9e5f;
+    box-shadow: 0 0 0.5rem #387250;
+  }
+  
+  .movie-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .genre-section {
+    margin-bottom: 2rem;
+  }
+  
+  .carousel-navigation {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    z-index: 1000000;
+  }
+  
+  .carousel-navigation .carousel__prev,
+  .carousel-navigation .carousel__next {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .carousel-navigation .carousel__prev:hover,
+  .carousel-navigation .carousel__next:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  </style>
+  
