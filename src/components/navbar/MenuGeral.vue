@@ -48,4 +48,22 @@ nav a {
 nav a:hover {
   font-weight: 600;
 }
+@media screen and (max-width: 500px) {
+  nav a {
+    font-size: 16px;
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s;
+  }
+  header {
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  nav {
+    column-gap:20px;
+  }
+}
 </style>

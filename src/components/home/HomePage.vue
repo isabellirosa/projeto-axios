@@ -92,4 +92,37 @@ a {
   margin-bottom: 0;
 }
 
+button {
+  width: 10vw;
+  height: 5vh;
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 25px;
+  color: white;
+  font-weight: 600;
+  margin-top: 20px;
+  transition: 0.4s;
+}
+
+button:hover {
+  background-color: white;
+  color: black;
+}
+@media screen and (max-width: 500px) {
+  .text h1 {
+    margin: 0;
+    font-size: 30px;
+  }
+  .text h4 {
+    margin-top: 10px;
+    font-size: 15px;
+    margin-bottom: 0;
+  }
+  button {
+    width: auto;
+    font-size: 16px;
+  }
+}
 </style>

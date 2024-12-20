@@ -43,7 +43,7 @@
     <div v-else>
       <div v-for="genre in genres" :key="genre.id" class="genre-section">
         <h2 class="titulo-genero">{{ getGenreName(genre.id) }}</h2>
-        <Carousel :itemsToShow="4.8" :transition="500">
+        <Carousel :itemsToShow="isSmallScreen?1.2 : 5.2" :transition="500">
           <Slide v-for="tv in genreTvShows[genre.id]" :key="tv.id">
             <TvCard
               :tv-item="tv"
@@ -54,7 +54,7 @@
             />
           </Slide>
           <template #addons>
-            <Navigation class="seta-carosel" />
+            <Navigation :class="isSmallScreen?'seta-generos':'seta-carosel'" />
           </template>
         </Carousel>
       </div>
@@ -69,7 +69,7 @@
   import { Carousel, Slide, Navigation } from "vue3-carousel";
   import "vue3-carousel/dist/carousel.css";
   import MenuGeral from '@/components/navbar/MenuGeral.vue'
-  
+  const isSmallScreen = ref(window.innerWidth < 500);
   const genreStore = useGenreStore();
   
   const isLoading = ref(false);
@@ -291,6 +291,34 @@
   
   .gif-loading {
       width: 400px;
+    }
+    @media screen and (max-width: 500px) {
+      header {
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+    }
+      nav {
+        column-gap:20px;
+      }
+      nav a{
+        font-size: 16px;
+      }
+  .titulo-pagina {
+      font-size: 25px;
+  }
+  .genre-item{
+    min-width: 100px;
+    padding: 0.1rem 0rem;
+  }
+  .titulo-genero{
+    font-size: 16px;
+    margin: 0px 30px 30px 50px !important;
+    width: auto;
+  }
+  
     }
   </style>
   
