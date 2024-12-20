@@ -5,16 +5,45 @@ import MenuGeral from '../navbar/MenuGeral.vue';
 <template>
   <div class="content">
     <div class="blur-layer"></div>
-    <MenuGeral/>
+    <MenuGeral />
     <div class="text">
       <h1>MERRY CHRISTMAS</h1>
-      <h4>watch the best Christmas movies here!</h4>
-      <button>Movies</button>
-    </div> 
+      <h4>Watch the best Christmas movies here!</h4>
+      <router-link to="/filmes" class="button-link">Movies</router-link>
+    </div>
   </div>
 </template>
 
 <style scoped>
+
+.button-link {
+  display: inline-block; 
+  width: 10vw;
+  height: 5vh;
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 25px;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  line-height: 5vh; 
+  text-decoration: none; 
+  transition: background-color 0.4s, color 0.4s;
+  margin-top: 20px;
+}
+
+.button-link:hover {
+  background-color: white;
+  color: black;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+  transition: color 0.3s;
+}
 
 .content {
   position: relative;
@@ -22,9 +51,9 @@ import MenuGeral from '../navbar/MenuGeral.vue';
   height: 100vh;
   overflow: hidden;
   display: flex;
-  align-items: center; 
+  align-items: center;
   justify-content: flex-end;
-  text-align: right; 
+  text-align: right;
   padding-right: 5%;
 }
 
@@ -48,7 +77,7 @@ import MenuGeral from '../navbar/MenuGeral.vue';
   color: white;
   display: flex;
   flex-direction: column;
-  align-items: flex-end; 
+  align-items: flex-end;
   justify-content: center;
 }
 
@@ -61,25 +90,6 @@ import MenuGeral from '../navbar/MenuGeral.vue';
   margin-top: 10px;
   font-size: 30px;
   margin-bottom: 0;
-}
-
-button {
-  width: 10vw;
-  height: 5vh;
-  background-color: transparent;
-  border: 1px solid white;
-  border-radius: 50px;
-  cursor: pointer;
-  font-size: 25px;
-  color: white;
-  font-weight: 600;
-  margin-top: 20px;
-  transition: 0.4s;
-}
-
-button:hover {
-  background-color: white;
-  color: black;
 }
 
 </style>
