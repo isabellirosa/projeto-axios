@@ -138,24 +138,25 @@
   
   <style scoped>
 header {
-    position: fixed; /* Deixa o menu fixo no topo */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height:15vh;
-    background-color: rgba(23, 26, 22, 0.589);
-    color: black;
-    font-size: 18px;
-    padding-right: 50px;
-    display: flex;
-    align-items: center;
-    justify-content:flex-end;
-    z-index: 10; /* Garante que o menu fique sobre o conteúdo */
-   font-weight: 500;
-   
-    transition: background-color 0.3s ease; /* Transição suave para o fundo */
+  position: fixed; /* Deixa o menu fixo no topo */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height:15vh;
+  background-color: transparent;
+  color: white;
+  font-size: 25px;
+  padding-right: 50px;
+  display: flex;
+  align-items: center;
+  justify-content:flex-end;
+  z-index: 10; /* Garante que o menu fique sobre o conteúdo */
+ font-weight: 500;
+ 
+  transition: background-color 0.3s ease;
   }
-  
+
+ 
   /* Navegação dentro do menu */
   nav {
     display: flex;
@@ -178,7 +179,7 @@ header {
   }
   .titulo-pagina{
     margin: 15vh 0vw 50px 0vw ;
-    font-family: "Cherry Swash", serif;
+    font-family: "Poppins", serif;;
     font-weight: 400;
     font-style: normal;
     font-size: 50px;

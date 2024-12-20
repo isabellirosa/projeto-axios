@@ -170,7 +170,7 @@ const getTrailerUrl = (videos) => {
 }
 
 .actions button {
-  padding: 8px 16px;
+  padding: 10px 16px;
   background-color: transparent;
   border: 1px solid white;
   border-radius: 50px;
