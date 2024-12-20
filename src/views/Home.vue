@@ -1,5 +1,6 @@
+<script setup>
+import HomePage from '@/components/home/HomePage.vue'
+</script>
 <template>
-  <div>
-    <h1>Home</h1>
-  </div>
+  <HomePage />
 </template>
