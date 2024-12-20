@@ -64,10 +64,10 @@
   
   const isLoading = ref(false);
   const genres = ref([]);
-  const genreTvShows = ref({}); // Estrutura para armazenar os programas de TV por gênero
-  const filteredGenreId = ref(null); // ID do gênero atualmente filtrado (null = mostrar todos)
-  const christmasKeywordId = ref(null); // ID da palavra-chave "Christmas"
-  const tvShows = ref([]); // Programas de TV filtrados para um gênero específico
+  const genreTvShows = ref({}); 
+  const filteredGenreId = ref(null); 
+  const christmasKeywordId = ref(null); 
+  const tvShows = ref([]); 
   
   const formatDate = (date) => new Date(date).toLocaleDateString("pt-BR");
   const getGenreName = (id) => {
@@ -98,24 +98,19 @@
       christmasKeywordId.value = response.data.results[0].id;
     }
   };
-  
-  // Filtrar por gênero específico
   const filterByGenre = async (genreId) => {
     if (filteredGenreId.value === genreId) {
-      // Se o gênero já estiver selecionado, desmarcá-lo para mostrar todos os gêneros
       filteredGenreId.value = null;
-      tvShows.value = []; // Limpa a lista de programas quando o filtro é removido
+      tvShows.value = []; 
     } else {
       filteredGenreId.value = genreId;
-  
-      // Carregar programas se ainda não estiverem armazenados
+
       if (!genreTvShows.value[genreId]) {
         isLoading.value = true;
         genreTvShows.value[genreId] = await fetchTvShowsByGenre(genreId);
         isLoading.value = false;
       }
-  
-      // Atribuir os programas filtrados à variável tvShows
+
       tvShows.value = genreTvShows.value[genreId];
     }
   };
@@ -123,14 +118,13 @@
   onMounted(async () => {
     isLoading.value = true;
   
-    // Busca os gêneros de programas de TV
+    
     await genreStore.getAllGenres("tv");
     genres.value = genreStore.genres;
   
-    // Busca o ID da palavra-chave "Christmas"
+   
     await fetchChristmasKeyword();
-  
-    // Carrega programas de TV para todos os gêneros
+
     for (const genre of genres.value) {
       const tvShowsForGenre = await fetchTvShowsByGenre(genre.id);
   
@@ -150,7 +144,6 @@
   </script>
   
   <style scoped>
-  /* Estilos existentes */
   .active {
     background-color: #df1b1b !important;
     font-weight: bolder;

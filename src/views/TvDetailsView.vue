@@ -1,8 +1,6 @@
 <script setup>
 import { defineProps, onMounted } from "vue";
 import { useTvStore } from "@/stores/tv";
-import { Carousel, Navigation, Slide } from "vue3-carousel";
-import "vue3-carousel/dist/carousel.css";
 
 const tvStore = useTvStore();
 
@@ -14,9 +12,7 @@ const props = defineProps({
 });
 
 onMounted(async () => {
-  // Carrega detalhes da série de TV
   await tvStore.getTvDetail(props.tvId);
-  // Carrega as séries recomendadas ou relacionadas (exemplo)
   await tvStore.getTvRecommendations(props.tvId);
 });
 </script>
@@ -50,26 +46,6 @@ onMounted(async () => {
       <p v-else>{{ company.name }}</p>
     </template>
   </div>
-
-  <h2>Séries Relacionadas</h2>
-  <Carousel :itemsToShow="5.7" :transition="500" class="carousel">
-    <Slide v-for="(relatedTv, index) in tvStore.tvRecommendations" :key="index">
-      <div class="tv-card">
-        <img
-          :src="`https://image.tmdb.org/t/p/w185${relatedTv.poster_path}`"
-          :alt="relatedTv.name"
-          @click="() => tvStore.getTvDetail(relatedTv.id)"
-        />
-        <div class="tv-details">
-          <h3>{{ relatedTv.name }}</h3>
-          <p>{{ relatedTv.first_air_date }}</p>
-        </div>
-      </div>
-    </Slide>
-    <template #addons>
-      <Navigation class="carousel-navigation" />
-    </template>
-  </Carousel>
 </template>
 
 <style scoped>

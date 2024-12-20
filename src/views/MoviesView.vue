@@ -3,8 +3,6 @@
       <img class="gif-loading" is-full-page src="@/assets/natal.gif" />
     </div>
     <h1>Filmes de Natal</h1>
-  
-    <!-- Lista de gêneros -->
     <ul class="genre-list">
       <li
         v-for="genre in genres"
@@ -64,10 +62,10 @@
   
   const isLoading = ref(false);
   const genres = ref([]);
-  const genreMovies = ref({}); // Estrutura para armazenar os filmes por gênero
-  const filteredGenreId = ref(null); // ID do gênero atualmente filtrado (null = mostrar todos)
-  const christmasKeywordId = ref(null); // ID da palavra-chave "Christmas"
-  const movies = ref([]); // Filmes filtrados para um gênero específico
+  const genreMovies = ref({}); 
+  const filteredGenreId = ref(null); 
+  const christmasKeywordId = ref(null); 
+  const movies = ref([]); 
   
   const formatDate = (date) => new Date(date).toLocaleDateString("pt-BR");
   const getGenreName = (id) => {
@@ -79,7 +77,7 @@
     const response = await api.get("discover/movie", {
       params: {
         with_genres: genreId,
-        with_keywords: christmasKeywordId.value, // Filtra pela palavra-chave "Christmas"
+        with_keywords: christmasKeywordId.value,
         language: "pt-BR",
       },
     });
@@ -98,39 +96,27 @@
       christmasKeywordId.value = response.data.results[0].id;
     }
   };
-  
-  // Filtrar por gênero específico
   const filterByGenre = async (genreId) => {
     if (filteredGenreId.value === genreId) {
-      // Se o gênero já estiver selecionado, desmarcá-lo para mostrar todos os gêneros
       filteredGenreId.value = null;
-      movies.value = []; // Limpa a lista de filmes quando o filtro é removido
+      movies.value = [];
     } else {
       filteredGenreId.value = genreId;
-  
-      // Carregar filmes se ainda não estiverem armazenados
+
       if (!genreMovies.value[genreId]) {
         isLoading.value = true;
         genreMovies.value[genreId] = await fetchMoviesByGenre(genreId);
         isLoading.value = false;
       }
-  
-      // Atribuir os filmes filtrados à variável `movies`
       movies.value = genreMovies.value[genreId];
     }
   };
   
   onMounted(async () => {
     isLoading.value = true;
-  
-    // Busca os gêneros de filmes
     await genreStore.getAllGenres("movie");
     genres.value = genreStore.genres;
-  
-    // Busca o ID da palavra-chave "Christmas"
     await fetchChristmasKeyword();
-  
-    // Carrega filmes para todos os gêneros
     for (const genre of genres.value) {
       genreMovies.value[genre.id] = await fetchMoviesByGenre(genre.id);
     }
@@ -140,7 +126,6 @@
   </script>
   
   <style scoped>
-  /* Estilos existentes */
   .active {
     background-color: #df1b1b !important;
     font-weight: bolder;
