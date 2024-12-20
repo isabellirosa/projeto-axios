@@ -145,9 +145,9 @@ header {
   left: 0;
   width: 100%;
   height:15vh;
-  background-color: transparent;
+  background-color: rgba(27, 27, 27, 0.774);
   color: white;
-  font-size: 25px;
+  font-size: 18px;
   padding-right: 50px;
   display: flex;
   align-items: center;

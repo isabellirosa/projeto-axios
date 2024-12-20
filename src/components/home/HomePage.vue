@@ -120,8 +120,8 @@ button:hover {
     font-size: 15px;
     margin-bottom: 0;
   }
-  button {
-    width: auto;
+  .button-link {
+    width: 100px;
     font-size: 16px;
   }
 }

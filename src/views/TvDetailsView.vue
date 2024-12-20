@@ -221,4 +221,18 @@ onMounted(async () => {
   font-size: 24px;
   color: #ccc;
 }
+@media screen and (max-width: 500px) {
+  .content {
+    margin-top: 80px;
+    flex-direction: column;
+    padding: 30px;
+  }
+  .details h1 {
+    font-size: 30px;
+    margin: 0;
+}
+.overview {
+  font-size: 14px;
+}
+}
 </style>
