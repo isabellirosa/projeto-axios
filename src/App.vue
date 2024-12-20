@@ -33,20 +33,20 @@
 <script setup></script>
 
 <template>
-  <header>
+  <!-- <header>
     <nav>
       <router-link to="/">Home</router-link>
       <router-link to="/filmes">Filmes</router-link>
       <router-link to="/tv">Programas de TV</router-link>
     </nav>
-  </header>
+  </header> -->
   <main>
     <router-view />
   </main>
 </template>
 
 <style scoped>
-header {
+/* header {
   height: 3rem;
   display: flex;
   background-color: black;
@@ -65,5 +65,5 @@ nav {
 nav a {
   text-decoration: none;
   color: #fff;
-}
+} */
 </style>

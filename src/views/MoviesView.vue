@@ -48,7 +48,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <img src="@/assets/C(2).gif" :alt="movie.title" />
+    <!-- <img src="@/assets/C(2).gif" :alt="movie.title" /> -->
     <loading v-model:active="isLoading" is-full-page />
     <h1>Filmes de Natal</h1>
     <ul class="genre-list">
