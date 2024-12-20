@@ -32,21 +32,25 @@ const emit = defineEmits(["open-movie", "list-movies"]);
       />
       <div class="movie-details">
         <p class="movie-title">{{ movie.title }}</p>
-        <p class="movie-release-date">{{ formatDate(movie.release_date) }}</p>
+        <p class="data"> {{ formatDate(movie.release_date) }}</p>
         <p class="movie-genres">
-          <span 
+          <!-- <span 
             v-for="genre_id in movie.genre_ids" 
             :key="genre_id" 
             @click="() => emit('list-movies', genre_id)" 
             :class="{ active: genre_id === genreStore.currentGenreId }"
           >
             {{ getGenreName(genre_id) }}
-          </span>
+          </span> -->
         </p>
       </div>
     </div>
   </template>
   <style scoped>
+  .data{
+    font-size: 12px;
+    align-self: flex-start;
+  }
   .active {
     background-color: #df1b1b !important;
     font-weight: bolder;
@@ -66,13 +70,8 @@ const emit = defineEmits(["open-movie", "list-movies"]);
   }
   
   .movie-genres span {
-    background-color: #748708;
-    border-radius: 0.5rem;
-    padding: 0.2rem 0.5rem;
-    color: #fff;
     font-size: 0.8rem;
     font-weight: bold;
-    transition: background-color 0.3s, box-shadow 0.3s;
   }
   
   .movie-genres span:hover {
@@ -83,28 +82,30 @@ const emit = defineEmits(["open-movie", "list-movies"]);
   
   .movie-card {
     width: 15rem;
-    height: 30rem;
+    height: 25rem;
     border-radius: 0.5rem;
     overflow: hidden;
-    box-shadow: 0 0 0.5rem #000;
   }
   
   .movie-card img {
     width: 100%;
     height: 20rem;
     border-radius: 0.5rem;
-    box-shadow: 0 0 0.5rem #000;
   }
   
   .movie-details {
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
     padding: 0 0.5rem;
   }
   
   .movie-title {
-    font-size: 1.1rem;
+    text-align: left;
+    align-self: flex-start;
+    font-size: 14px;
     font-weight: bold;
     line-height: 1.3rem;
-    height: 3.2rem;
   }
   </style>
   

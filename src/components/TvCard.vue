@@ -35,22 +35,26 @@ const emit = defineEmits(["open-tv", "list-tv"]);
     />
     <div class="tv-details">
       <p class="tv-title">{{ tvItem.original_name }}</p>
-      <p class="tv-release-date">{{ formatDate(tvItem.first_air_date) }}</p>
+      <p class="data">{{ formatDate(tvItem.first_air_date) }}</p>
       <p class="tv-genres">
-        <span 
+        <!-- <span 
           v-for="genre_id in tvItem.genre_ids" 
           :key="genre_id" 
           @click="() => emit('list-tv', genre_id)" 
           :class="{ active: genre_id === genreStore.currentGenreId }"
         >
           {{ getGenreName(genre_id) }}
-        </span>
+        </span> -->
       </p>
     </div>
   </div>
 </template>
 
 <style scoped>
+.data{
+    font-size: 12px;
+    align-self: flex-start;
+  }
 .active {
   background-color: #df1b1b !important;
   font-weight: bolder;
@@ -82,15 +86,13 @@ const emit = defineEmits(["open-tv", "list-tv"]);
 .tv-genres span:hover {
   cursor: pointer;
   background-color: #455a08;
-  box-shadow: 0 0 0.5rem #748708;
 }
 
 .tv-card {
   width: 15rem;
-  height: 30rem;
+  height: 25rem;
   border-radius: 0.5rem;
   overflow: hidden;
-  box-shadow: 0 0 0.5rem #000;
 }
 
 .tv-card img {
@@ -108,6 +110,5 @@ const emit = defineEmits(["open-tv", "list-tv"]);
   font-size: 1.1rem;
   font-weight: bold;
   line-height: 1.3rem;
-  height: 3.2rem;
 }
 </style>

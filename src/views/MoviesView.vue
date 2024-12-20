@@ -1,24 +1,34 @@
 <template>
+    <header>
+        <nav>
+          <router-link to="/">Home</router-link>
+          <router-link to="/filmes">Filmes</router-link>
+          <router-link to="/tv">Programas de TV</router-link>
+        </nav>
+      </header>
     <div v-if="isLoading" class="loading">
       <img class="gif-loading" is-full-page src="@/assets/natal.gif" />
     </div>
-    <h1>Filmes de Natal</h1>
-    <ul class="genre-list">
-      <li
-        v-for="genre in genres"
+    <h1 class="titulo-pagina">Filmes Natalinos</h1>
+    <Carousel :itemsToShow="10.8" :transition="500">
+        <div class="carousel">
+        <Slide v-for="genre in genres"
         :key="genre.id"
         @click="filterByGenre(genre.id)"
-        class="genre-item"
-        :class="{ active: genre.id === filteredGenreId }"
-      >
-        {{ genreStore.getGenreName(genre.id) }}
-      </li>
-    </ul>
-  
+        class="genre-item carousel"
+        :class="{ active: genre.id === filteredGenreId }">
+          <li> {{ genreStore.getGenreName(genre.id) }}</li>
+        </Slide></div>
+        <template #addons>
+          <Navigation class="seta-generos" />
+        </template>
+      </Carousel>
     <!-- Filmes filtrados ou todos os gêneros -->
-    <div v-if="filteredGenreId" class="movie-list">
-      <h2>{{ getGenreName(filteredGenreId) }}</h2>
+    <div v-if="filteredGenreId">
+      <h2 class="titulo-genero">{{ getGenreName(filteredGenreId) }}</h2>
+      <div class="movie-list">
       <MovieCard
+      
         v-for="movie in movies"
         :key="movie.id"
         :movie="movie"
@@ -26,12 +36,12 @@
         :getGenreName="getGenreName"
         :formatDate="formatDate"
         @open-movie="openMovie"
-      />
+      /></div>
     </div>
   
     <div v-else>
       <div v-for="genre in genres" :key="genre.id" class="genre-section">
-        <h2>{{ getGenreName(genre.id) }}</h2>
+        <h2 class="titulo-genero">{{ getGenreName(genre.id) }}</h2>
         <Carousel :itemsToShow="4.8" :transition="500">
           <Slide v-for="movie in genreMovies[genre.id]" :key="movie.id">
             <MovieCard
@@ -43,7 +53,7 @@
             />
           </Slide>
           <template #addons>
-            <Navigation class="aa" />
+            <Navigation class="seta-carosel" />
           </template>
         </Carousel>
       </div>
@@ -53,6 +63,7 @@
   <script setup>
   import { ref, onMounted } from "vue";
   import MovieCard from "@/components/MovieCard.vue";
+  import MenuGeral from '@/components/navbar/MenuGeral.vue'
   import api from "@/plugins/axios";
   import { useGenreStore } from "@/stores/genre";
   import { Carousel, Slide, Navigation } from "vue3-carousel";
@@ -67,7 +78,7 @@
   const christmasKeywordId = ref(null); 
   const movies = ref([]); 
   
-  const formatDate = (date) => new Date(date).toLocaleDateString("pt-BR");
+  const formatDate = (date) => new Date(date).getFullYear();
   const getGenreName = (id) => {
     const genero = genres.value.find((genre) => genre.id === id);
     return genero ? genero.name : "Desconhecido";
@@ -126,8 +137,64 @@
   </script>
   
   <style scoped>
+  
+header {
+    position: fixed; /* Deixa o menu fixo no topo */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height:15vh;
+   
+    color: black;
+    font-size: 18px;
+    padding-right: 50px;
+    display: flex;
+    align-items: center;
+    justify-content:flex-end;
+    z-index: 10; /* Garante que o menu fique sobre o conteúdo */
+   font-weight: 500;
+   
+    transition: background-color 0.3s ease; /* Transição suave para o fundo */
+  }
+  
+  /* Navegação dentro do menu */
+  nav {
+    display: flex;
+    column-gap:60px;
+  }
+  
+  nav a {
+    text-decoration: none;
+    color: #1B4A14;
+    transition: color 0.3s;
+  }
+  
+  nav a:hover {
+    font-weight: 600;
+  }
+  .carousel{
+    display: flex;
+    margin: 10px 30px;
+  }
+  .titulo-pagina{
+    margin-top: 17vh;
+    font-family: "Cherry Swash", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 50px;
+    text-align: center;
+    color: #1B4A14;
+  }
+  .titulo-genero{
+    display: block;
+    font-weight: 600;
+    color:#B02525;
+    margin: 0px 30px 30px 30px;
+    border-bottom: 1.5px solid #B02525;;
+  }
   .active {
-    background-color: #df1b1b !important;
+    background-color: #4e9e5f !important;
+    color:white !important;
     font-weight: bolder;
   }
   
@@ -156,6 +223,7 @@
   .movie-genres span:hover {
     cursor: pointer;
     background-color: #455a08;
+    color:white;
     box-shadow: 0 0 0.5rem #748708;
   }
   
@@ -185,17 +253,21 @@
   }
   
   .genre-item {
-    background-color: #387250;
+    height: min-content;
+    border:1px solid #387250;
     border-radius: 1rem;
     padding: 0.5rem 1rem;
-    color: #fff;
+    color: #387250;
     transition: background-color 0.3s, box-shadow 0.3s;
+    margin: 10px;
+
   }
   
   .genre-item:hover {
     cursor: pointer;
     background-color: #4e9e5f;
     box-shadow: 0 0 0.5rem #387250;
+    color:white;
   }
   
   .movie-list {
